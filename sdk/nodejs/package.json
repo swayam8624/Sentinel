@@ -1,5 +1,5 @@
 {
-  "name": "@sentinel-platform/sentinel-sdk",
+  "name": "@yugenkairo/sentinel-sdk",
   "version": "0.1.0",
   "description": "Node.js SDK for Sentinel - A self-healing LLM firewall with cryptographic data protection",
   "main": "index.js",
