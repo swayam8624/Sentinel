@@ -23,7 +23,7 @@ fi
 
 # Publish to npm
 echo "Publishing to npm..."
-npm publish
+npm publish --access public
 
 echo "Node.js SDK published successfully!"
 echo "Package is now available at: https://www.npmjs.com/package/@sentinel-platform/sentinel-sdk"
