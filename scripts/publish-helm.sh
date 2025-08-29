@@ -11,7 +11,12 @@ helm package charts/sentinel
 # Create index.yaml
 helm repo index . --url https://swayam8624.github.io/Sentinel
 
-# The chart files would need to be pushed to a GitHub Pages branch
-# This is a simplified version - in practice, you'd push to a gh-pages branch
-echo "Helm chart packaged successfully!"
-echo "To publish, push the .tgz file and index.yaml to your GitHub Pages branch."
+# Move packaged chart to docs directory for GitHub Pages
+mkdir -p docs/charts
+mv sentinel-*.tgz docs/charts/
+
+# Update index.yaml
+helm repo index docs/charts --url https://swayam8624.github.io/Sentinel/charts
+
+echo "Helm chart packaged and index updated successfully!"
+echo "Charts are now available in the docs/charts directory for GitHub Pages."

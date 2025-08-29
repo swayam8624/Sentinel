@@ -136,6 +136,30 @@ release:
 	fi
 	./scripts/release.sh $(VERSION)
 
+# Publish to Docker Hub
+.PHONY: publish-docker
+publish-docker:
+	@if [ -z "$(DOCKERHUB_USERNAME)" ]; then \
+		echo "DOCKERHUB_USERNAME is not set. Usage: make publish-docker DOCKERHUB_USERNAME=yourusername"; \
+		exit 1; \
+	fi
+	./scripts/publish-to-dockerhub.sh $(DOCKERHUB_USERNAME)
+
+# Publish Helm charts
+.PHONY: publish-helm
+publish-helm:
+	./scripts/publish-helm-charts.sh
+
+# Publish Node.js SDK
+.PHONY: publish-nodejs
+publish-nodejs:
+	./scripts/publish-nodejs-sdk.sh
+
+# Publish Python SDK
+.PHONY: publish-python
+publish-python:
+	./scripts/publish-python-sdk.sh
+
 # Help
 .PHONY: help
 help:
@@ -161,3 +185,7 @@ help:
 	@echo "docs           - Generate documentation"
 	@echo "dev-tools      - Install development tools"
 	@echo "release        - Create a new release (requires version)"
+	@echo "publish-docker - Publish to Docker Hub (requires username)"
+	@echo "publish-helm   - Publish Helm charts"
+	@echo "publish-nodejs - Publish Node.js SDK"
+	@echo "publish-python - Publish Python SDK"

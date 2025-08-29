@@ -97,6 +97,7 @@ helm install sentinel sentinel/sentinel
 - [API Documentation](docs/api/)
 - [Deployment Guide](docs/deployment/)
 - [Security Policy](docs/security.md)
+- [Distribution Channels](DISTRIBUTION_CHANNELS.md)
 
 ## Contributing
 
