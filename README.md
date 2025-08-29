@@ -137,11 +137,13 @@ helm install sentinel sentinel/sentinel
 Integrate Sentinel directly into your applications:
 
 **Node.js:**
+
 ```bash
 npm install @sentinel-platform/sentinel-sdk
 ```
 
 **Python:**
+
 ```bash
 pip install sentinel-sdk
 ```
