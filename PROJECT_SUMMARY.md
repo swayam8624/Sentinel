@@ -60,10 +60,10 @@ Sentinel + CipherMesh is a self-healing LLM firewall with cryptographic data pro
 
 **Deliverables**: Running gateway; SDKs; adapter conformance tests
 
-### Phase F — Security & Crypto Hardening 🔄 IN PROGRESS
+### Phase F — Security & Crypto Hardening ✅ COMPLETED
 
 - **F1**: HKDF salts and nonce uniqueness enforcement ✅ COMPLETED
-- **F2**: KMS/HSM envelope integration; BYOK flows; rotation runbook ⏳ PARTIALLY COMPLETED
+- **F2**: KMS/HSM envelope integration; BYOK flows; rotation runbook ✅ COMPLETED
 - **F3**: Vault split-knowledge (optional) & access reason codes ✅ COMPLETED
 - **F4**: Merkle hash chain logs; daily root anchoring ✅ COMPLETED
 
@@ -138,7 +138,7 @@ All core cryptographic components have been implemented:
 - **Format Preserving Encryption**: FF3-1 implementation for sensitive data
 - **Token Vault**: Secure storage with access tracking
 - **Merkle Trees**: Tamper-evident audit logs
-- **KMS Interface**: Envelope encryption framework
+- **KMS Interface**: Envelope encryption framework with cloud integrations
 
 ### 2. Data Protection ✅ COMPLETE
 
@@ -222,16 +222,16 @@ The implementation meets the performance requirements specified in the SRS:
 
 ### Immediate Priorities
 
-1. **Complete KMS Integration** (Phase F2)
+1. **Security Audits**
 
-   - Cloud KMS integrations (AWS, GCP, Azure)
-   - BYOK flows implementation
-   - Key rotation mechanisms
-
-2. **Security Audits**
    - Penetration testing
    - Cryptographic implementation review
    - Compliance verification
+
+2. **Integration with CipherMesh**
+   - Connect HKDF/FPE to data redaction pipeline
+   - Integrate token vault with detokenization gate
+   - Implement Merkle logs for audit trails
 
 ### Medium-term Goals
 

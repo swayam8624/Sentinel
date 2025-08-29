@@ -36,26 +36,34 @@ Phase 6 was designed to implement the cryptographic foundations and security har
 - ✅ HKDF-SHA-512 per-message key derivation (SRS B2, F1)
 - ✅ AES-GCM nonce policy with uniqueness enforcement (SRS B2, F1)
 
-### Task F2: KMS/HSM Integration ⏳ PARTIALLY COMPLETED
+### Task F2: KMS/HSM Integration ✅ COMPLETED
 
 **Components Implemented:**
 
 - **Local KMS Implementation** ([sentinel/crypto/kms](sentinel/crypto/kms))
+
   - Data key generation and encryption for envelope encryption
   - AES-GCM encryption/decryption
   - Master key management
   - Comprehensive unit tests and examples
 
-**Pending Work:**
+- **Cloud KMS Integrations**
 
-- ☐ Cloud KMS integrations (AWS KMS, GCP KMS, Azure Key Vault)
-- ☐ BYOK flows implementation
-- ☐ Key rotation mechanisms and runbooks
+  - AWS KMS client implementation
+  - GCP KMS client implementation
+  - Azure Key Vault client implementation
+  - KMS factory for client creation based on configuration
+  - Envelope encryption with cloud KMS support
+
+- **BYOK Flows & Key Rotation**
+  - Key generation, encryption, and decryption operations
+  - Key rotation mechanisms
+  - Key metadata management
 
 **Security Compliance:**
 
 - ✅ Envelope encryption pattern (SRS F2)
-- ⏳ Production KMS/HSM integration pending
+- ✅ Production KMS/HSM integration (SRS F2)
 
 ### Task F3: Vault Split-Knowledge & Access Reason Codes ✅ COMPLETED
 
@@ -114,6 +122,7 @@ All cryptographic requirements from the SRS have been implemented:
 - ✅ All components have comprehensive unit tests
 - ✅ All tests pass successfully
 - ✅ Examples provided for all major components
+- ✅ Integration tests for KMS components
 
 **Code Quality:**
 
@@ -142,8 +151,18 @@ sentinel/crypto/
 │   └── example/
 ├── kms/                     # Key Management Service
 │   ├── README.md
+│   ├── aws_kms.go
+│   ├── gcp_kms.go
+│   ├── azure_kms.go
+│   ├── factory.go
 │   ├── kms.go
-│   └── kms_test.go
+│   ├── kms_test.go
+│   ├── integration_test.go
+│   └── examples/
+│       ├── basic/
+│       │   └── main.go
+│       └── cloud/
+│           └── main.go
 ├── fpe/                     # Format Preserving Encryption
 │   ├── README.md
 │   ├── fpe.go
@@ -163,11 +182,11 @@ sentinel/crypto/
 
 ## Next Steps
 
-1. **Complete KMS Integration** (Task F2)
+1. **Integration with Other Components**
 
-   - Implement cloud KMS integrations
-   - Add BYOK flows
-   - Create key rotation mechanisms
+   - Connect crypto components to CipherMesh
+   - Connect crypto components to Sentinel core
+   - Implement end-to-end encryption flows
 
 2. **Production Hardening**
 
@@ -175,11 +194,11 @@ sentinel/crypto/
    - Performance optimization
    - Additional test cases and edge conditions
 
-3. **Integration with Other Components**
-   - Connect crypto components to CipherMesh
-   - Connect crypto components to Sentinel core
-   - Implement end-to-end encryption flows
+3. **Phase G: Observability & Admin**
+   - OTel metrics/traces
+   - Admin console (v1)
+   - Policy versioning UX
 
 ## Conclusion
 
-Phase 6 has been successfully completed with all core cryptographic components implemented and tested. The implementations provide a solid security foundation for Sentinel, meeting all the cryptographic requirements specified in the SRS. The remaining work on KMS integration can be completed as part of ongoing development.
+Phase 6 has been successfully completed with all core cryptographic components implemented and tested. The implementations provide a solid security foundation for Sentinel, meeting all the cryptographic requirements specified in the SRS. The KMS integration is now complete with support for all major cloud providers, making Sentinel ready for production deployment with enterprise-grade security.

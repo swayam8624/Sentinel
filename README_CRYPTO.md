@@ -43,7 +43,8 @@ This directory contains the core cryptographic implementations for the Sentinel 
   - Data key generation and encryption
   - AES-GCM encryption/decryption
   - Master key management
-  - Local implementation (cloud integrations pending)
+  - Cloud integrations (AWS KMS, GCP KMS, Azure Key Vault)
+  - Local implementation for development/testing
 
 ### 4. FPE (Format Preserving Encryption)
 
@@ -110,6 +111,10 @@ go run sentinel/crypto/fpe/example/main.go
 
 # Run vault example
 go run sentinel/crypto/vault/example/main.go
+
+# Run KMS examples
+go run sentinel/crypto/kms/example/main.go
+go run sentinel/crypto/kms/example/cloud_example.go
 ```
 
 ## Integration Status
@@ -120,26 +125,25 @@ The crypto components are ready for integration with the broader Sentinel platfo
 - ✅ Comprehensive test coverage
 - ✅ Example usage provided
 - ✅ Security requirements satisfied
-- ⏳ Cloud KMS integrations pending (Phase F2)
+- ✅ Cloud KMS integrations completed (Phase F2)
 
 ## Next Steps
 
-1. **Complete KMS Integration**:
-
-   - Implement cloud KMS integrations (AWS KMS, GCP KMS, Azure Key Vault)
-   - Add BYOK flows
-   - Create key rotation mechanisms
-
-2. **Integration with CipherMesh**:
+1. **Integration with CipherMesh**:
 
    - Connect HKDF/FPE to data redaction pipeline
    - Integrate token vault with detokenization gate
    - Implement Merkle logs for audit trails
 
-3. **Security Audits**:
+2. **Security Audits**:
+
    - Cryptographic implementation review
    - Penetration testing
    - Compliance verification
+
+3. **Performance Optimization**:
+   - Optimize encryption/decryption performance
+   - Reduce latency in key management operations
 
 ## Design Principles
 

@@ -88,35 +88,35 @@ func (oa *OpenAIAdapter) ChatCompletion(ctx context.Context, req *ChatCompletion
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
-	
+
 	// Create HTTP request
 	httpReq, err := http.NewRequestWithContext(ctx, "POST", oa.baseURL+"/chat/completions", bytes.NewBuffer(requestBody))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create HTTP request: %w", err)
 	}
-	
+
 	// Set headers
 	httpReq.Header.Set("Content-Type", "application/json")
 	httpReq.Header.Set("Authorization", "Bearer "+oa.apiKey)
-	
+
 	// Send request
 	httpResp, err := oa.httpClient.Do(httpReq)
 	if err != nil {
 		return nil, fmt.Errorf("failed to send request: %w", err)
 	}
 	defer httpResp.Body.Close()
-	
+
 	// Check status code
 	if httpResp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("OpenAI API returned status %d", httpResp.StatusCode)
 	}
-	
+
 	// Parse response
 	var resp ChatCompletionResponse
 	if err := json.NewDecoder(httpResp.Body).Decode(&resp); err != nil {
 		return nil, fmt.Errorf("failed to decode response: %w", err)
 	}
-	
+
 	return &resp, nil
 }
 
@@ -124,35 +124,35 @@ func (oa *OpenAIAdapter) ChatCompletion(ctx context.Context, req *ChatCompletion
 func (oa *OpenAIAdapter) ChatCompletionStream(ctx context.Context, req *ChatCompletionRequest) (*ChatCompletionStream, error) {
 	// Set streaming flag
 	req.Stream = true
-	
+
 	// Convert request to JSON
 	requestBody, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
-	
+
 	// Create HTTP request
 	httpReq, err := http.NewRequestWithContext(ctx, "POST", oa.baseURL+"/chat/completions", bytes.NewBuffer(requestBody))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create HTTP request: %w", err)
 	}
-	
+
 	// Set headers
 	httpReq.Header.Set("Content-Type", "application/json")
 	httpReq.Header.Set("Authorization", "Bearer "+oa.apiKey)
-	
+
 	// Send request
 	httpResp, err := oa.httpClient.Do(httpReq)
 	if err != nil {
 		return nil, fmt.Errorf("failed to send request: %w", err)
 	}
-	
+
 	// Check status code
 	if httpResp.StatusCode != http.StatusOK {
 		httpResp.Body.Close()
 		return nil, fmt.Errorf("OpenAI API returned status %d", httpResp.StatusCode)
 	}
-	
+
 	// Create stream
 	stream := &ChatCompletionStream{
 		response: httpResp,
@@ -161,7 +161,7 @@ func (oa *OpenAIAdapter) ChatCompletionStream(ctx context.Context, req *ChatComp
 			buffer: make([]byte, 0, 4096),
 		},
 	}
-	
+
 	return stream, nil
 }
 
@@ -182,10 +182,10 @@ func (s *ChatCompletionStream) Close() error {
 
 // ChatCompletionStreamResponse represents a streaming response chunk
 type ChatCompletionStreamResponse struct {
-	ID      string   `json:"id"`
-	Object  string   `json:"object"`
-	Created int64    `json:"created"`
-	Model   string   `json:"model"`
+	ID      string         `json:"id"`
+	Object  string         `json:"object"`
+	Created int64          `json:"created"`
+	Model   string         `json:"model"`
 	Choices []StreamChoice `json:"choices"`
 }
 
@@ -203,28 +203,28 @@ func (oa *OpenAIAdapter) GetModelInfo(ctx context.Context, modelID string) (*Mod
 	if err != nil {
 		return nil, fmt.Errorf("failed to create HTTP request: %w", err)
 	}
-	
+
 	// Set headers
 	httpReq.Header.Set("Authorization", "Bearer "+oa.apiKey)
-	
+
 	// Send request
 	httpResp, err := oa.httpClient.Do(httpReq)
 	if err != nil {
 		return nil, fmt.Errorf("failed to send request: %w", err)
 	}
 	defer httpResp.Body.Close()
-	
+
 	// Check status code
 	if httpResp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("OpenAI API returned status %d", httpResp.StatusCode)
 	}
-	
+
 	// Parse response
 	var resp ModelInfo
 	if err := json.NewDecoder(httpResp.Body).Decode(&resp); err != nil {
 		return nil, fmt.Errorf("failed to decode response: %w", err)
 	}
-	
+
 	return &resp, nil
 }
 
@@ -241,22 +241,22 @@ func (oa *OpenAIAdapter) ValidateConfig() error {
 	if oa.apiKey == "" {
 		return fmt.Errorf("API key is required")
 	}
-	
+
 	if oa.baseURL == "" {
 		oa.baseURL = "https://api.openai.com/v1"
 	}
-	
+
 	return nil
 }
 
 // GetCapabilities returns the adapter capabilities
 func (oa *OpenAIAdapter) GetCapabilities() *AdapterCapabilities {
 	return &AdapterCapabilities{
-		Streaming:      true,
-		FunctionCalls:  true,
-		Embeddings:     true,
-		ModelInfo:      true,
-		RateLimiting:   true,
+		Streaming:     true,
+		FunctionCalls: true,
+		Embeddings:    true,
+		ModelInfo:     true,
+		RateLimiting:  true,
 	}
 }
 
@@ -267,4 +267,4 @@ type AdapterCapabilities struct {
 	Embeddings    bool `json:"embeddings"`
 	ModelInfo     bool `json:"model_info"`
 	RateLimiting  bool `json:"rate_limiting"`
-}package openai
+}

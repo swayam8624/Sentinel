@@ -2,23 +2,22 @@ package adapters
 
 import (
 	"context"
-	"io"
 )
 
 // LLMAdapter is the interface that all LLM adapters must implement
 type LLMAdapter interface {
 	// ChatCompletion sends a chat completion request
 	ChatCompletion(ctx context.Context, req *ChatCompletionRequest) (*ChatCompletionResponse, error)
-	
+
 	// ChatCompletionStream sends a streaming chat completion request
 	ChatCompletionStream(ctx context.Context, req *ChatCompletionRequest) (ChatCompletionStream, error)
-	
+
 	// GetModelInfo gets information about a model
 	GetModelInfo(ctx context.Context, modelID string) (*ModelInfo, error)
-	
+
 	// ValidateConfig validates the adapter configuration
 	ValidateConfig() error
-	
+
 	// GetCapabilities returns the adapter capabilities
 	GetCapabilities() *AdapterCapabilities
 }
@@ -66,17 +65,17 @@ type Usage struct {
 type ChatCompletionStream interface {
 	// Recv receives the next chunk
 	Recv() (*ChatCompletionStreamResponse, error)
-	
+
 	// Close closes the stream
 	Close() error
 }
 
 // ChatCompletionStreamResponse represents a streaming response chunk
 type ChatCompletionStreamResponse struct {
-	ID      string        `json:"id"`
-	Object  string        `json:"object"`
-	Created int64         `json:"created"`
-	Model   string        `json:"model"`
+	ID      string         `json:"id"`
+	Object  string         `json:"object"`
+	Created int64          `json:"created"`
+	Model   string         `json:"model"`
 	Choices []StreamChoice `json:"choices"`
 }
 
@@ -114,4 +113,4 @@ type AdapterFactory interface {
 type AdapterConfig struct {
 	Type     string                 `json:"type"`
 	Settings map[string]interface{} `json:"settings"`
-}package adapters
+}

@@ -34,6 +34,31 @@ run:
 test:
 	$(GOTEST) -v ./...
 
+# Run unit tests
+.PHONY: test-unit
+test-unit:
+	$(GOTEST) -v ./tests/unit/...
+
+# Run integration tests
+.PHONY: test-integration
+test-integration:
+	$(GOTEST) -v ./tests/integration/...
+
+# Run security tests
+.PHONY: test-security
+test-security:
+	$(GOTEST) -v ./tests/security/...
+
+# Run performance tests
+.PHONY: test-performance
+test-performance:
+	$(GOTEST) -v ./tests/performance/...
+
+# Run benchmarks
+.PHONY: bench
+bench:
+	$(GOTEST) -bench=. ./tests/performance/...
+
 # Run tests with coverage
 .PHONY: test-coverage
 test-coverage:
@@ -109,7 +134,12 @@ help:
 	@echo "================"
 	@echo "build          - Build the application"
 	@echo "run            - Run the application"
-	@echo "test           - Run unit tests"
+	@echo "test           - Run all tests"
+	@echo "test-unit      - Run unit tests"
+	@echo "test-integration - Run integration tests"
+	@echo "test-security  - Run security tests"
+	@echo "test-performance - Run performance tests"
+	@echo "bench          - Run benchmarks"
 	@echo "test-coverage  - Run tests with coverage report"
 	@echo "clean          - Clean build artifacts"
 	@echo "deps           - Install dependencies"
