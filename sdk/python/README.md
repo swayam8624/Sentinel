@@ -1,6 +1,6 @@
 # Sentinel Python SDK
 
-The official Python SDK for Sentinel - a self-healing LLM firewall with cryptographic data protection.
+Python SDK for Sentinel - A self-healing LLM firewall with cryptographic data protection.
 
 ## Installation
 
@@ -10,78 +10,37 @@ pip install sentinel-sdk
 
 ## Usage
 
-### Basic Usage
-
 ```python
-from sentinel import Sentinel
+from sentinel import SentinelClient
 
 # Initialize the client
-sentinel = Sentinel(
-    endpoint="https://sentinel.example.com",
+client = SentinelClient(
+    base_url="http://localhost:8080",
     api_key="your-api-key"
 )
 
-# Send a chat request through Sentinel
-response = sentinel.chat(
-    model="gpt-4",
+# Send a chat completion request through Sentinel
+response = client.chat_completions.create(
+    model="gpt-3.5-turbo",
     messages=[
-        {"role": "user", "content": "Hello, how are you?"}
-    ],
-    metadata={
-        "data_classes": ["pii"],
-        "tools_allowed": True
-    }
+        {"role": "user", "content": "Hello, world!"}
+    ]
 )
 
 print(response.choices[0].message.content)
 ```
 
-### Streaming
-
-```python
-# Streaming example
-for chunk in sentinel.chat_stream(
-    model="gpt-4",
-    messages=[{"role": "user", "content": "Tell me a story"}]
-):
-    print(chunk.choices[0].delta.content or "", end="")
-```
-
-## Error Handling
-
-```python
-from sentinel import Sentinel, SecurityError, PolicyError
-
-try:
-    response = sentinel.chat(
-        model="gpt-4",
-        messages=[{"role": "user", "content": "Sensitive content"}]
-    )
-except SecurityError as e:
-    print(f"Security violation: {e}")
-except PolicyError as e:
-    print(f"Policy violation: {e}")
-except Exception as e:
-    print(f"Other error: {e}")
-```
-
-## Configuration
-
-The SDK can be configured with:
-
-- `endpoint`: The Sentinel gateway URL
-- `api_key`: API key for authentication
-- `timeout`: Request timeout in seconds (default: 30)
-
 ## Features
 
-- Automatic redaction of sensitive data
-- Policy-based handling of different data classes
-- Security violation detection and response
-- Tool/function call guarding
-- Streaming support
-- Comprehensive error handling
+- **Security**: All requests are processed through Sentinel's security pipeline
+- **Compatibility**: Drop-in replacement for OpenAI SDK
+- **Multi-tenant**: Support for tenant isolation
+- **Observability**: Built-in metrics and tracing
+
+## Documentation
+
+For full documentation, visit [https://github.com/swayam8624/Sentinel/docs](https://github.com/swayam8624/Sentinel/docs)
 
 ## License
 
-Apache 2.0
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.

@@ -104,11 +104,56 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ### Development Setup
 
-1. Install Go 1.21 or later
+1. Install Go 1.23 or later
 2. Clone the repository
 3. Install dependencies: `make deps`
 4. Build the application: `make build`
 5. Run the application: `make run`
+
+## Distribution Channels
+
+Sentinel is available through multiple distribution channels:
+
+### Docker
+
+Pre-built Docker images are available on Docker Hub:
+
+```bash
+docker pull sentinel/gateway:latest
+```
+
+### Helm Charts
+
+Deploy Sentinel on Kubernetes using Helm:
+
+```bash
+helm repo add sentinel https://sentinel-platform.github.io/helm-charts
+helm install sentinel sentinel/sentinel
+```
+
+### Language SDKs
+
+Integrate Sentinel directly into your applications:
+
+**Node.js:**
+```bash
+npm install @sentinel-platform/sentinel-sdk
+```
+
+**Python:**
+```bash
+pip install sentinel-sdk
+```
+
+### From Source
+
+Build from source:
+
+```bash
+git clone https://github.com/swayam8624/Sentinel.git
+cd Sentinel
+make build
+```
 
 ## License
 

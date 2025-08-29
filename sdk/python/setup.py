@@ -7,11 +7,11 @@ setup(
     name="sentinel-sdk",
     version="0.1.0",
     author="Sentinel Team",
-    author_email="team@sentinel-platform.org",
-    description="Python SDK for Sentinel - Self-healing LLM firewall",
+    author_email="sentinel-team@example.com",
+    description="Python SDK for Sentinel - A self-healing LLM firewall with cryptographic data protection",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/sentinel-platform/sentinel",
+    url="https://github.com/swayam8624/Sentinel",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -26,12 +26,14 @@ setup(
     ],
     python_requires=">=3.8",
     install_requires=[
-        "requests>=2.25.0",
+        "requests>=2.28.0",
+        "pydantic>=1.10.0",
     ],
     extras_require={
         "dev": [
-            "pytest>=6.0",
-            "pytest-cov>=2.0",
+            "pytest>=7.0.0",
+            "black>=22.0.0",
+            "flake8>=5.0.0",
         ],
     },
 )
