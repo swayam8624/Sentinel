@@ -7,35 +7,42 @@ Your Sentinel + CipherMesh project is now officially public and available to the
 ## ✅ Completed Tasks
 
 ### 1. GitHub Repository
+
 - ✅ Repository is live at https://github.com/swayam8624/Sentinel
 - ✅ All code has been pushed and is publicly accessible
 - ✅ Documentation is complete and comprehensive
 
 ### 2. Docker Images
+
 - ✅ Dockerfile has been created and tested
 - ✅ Images built successfully: `sentinel/gateway:0.1.0` and `sentinel/gateway:latest`
 - ✅ Images are ready for publication to Docker Hub
 
 ### 3. Helm Charts
+
 - ✅ Complete Helm chart structure created
 - ✅ Charts are packaged and ready for GitHub Pages publication
 - ✅ Repository will be available at https://swayam8624.github.io/Sentinel/charts
 
 ### 4. Language SDKs
+
 - ✅ Node.js SDK package.json created
 - ✅ Python SDK setup.py created
 - ✅ Both SDKs are ready for publication to npm and PyPI
 
 ### 5. Documentation
+
 - ✅ GitHub Pages site is live at https://swayam8624.github.io/Sentinel/
 - ✅ Complete API documentation, deployment guides, and security policies
 - ✅ Release announcement prepared
 
 ### 6. CI/CD Pipeline
+
 - ✅ GitHub Actions workflow configured
 - ✅ Automated testing, building, and release processes
 
 ### 7. Publishing Scripts
+
 - ✅ Docker Hub publishing script created
 - ✅ Helm charts publishing script created
 - ✅ Node.js SDK publishing script created
@@ -45,6 +52,7 @@ Your Sentinel + CipherMesh project is now officially public and available to the
 ## 🚀 How to Publish Everything
 
 ### 1. Publish Docker Images
+
 ```bash
 # Log in to Docker Hub first
 docker login
@@ -54,6 +62,7 @@ docker login
 ```
 
 ### 2. Publish Helm Charts
+
 ```bash
 # Package and prepare charts
 ./scripts/publish-helm-charts.sh
@@ -65,6 +74,7 @@ git push origin main
 ```
 
 ### 3. Publish Node.js SDK
+
 ```bash
 # Navigate to the SDK directory
 cd sdk/nodejs
@@ -77,6 +87,7 @@ npm publish
 ```
 
 ### 4. Publish Python SDK
+
 ```bash
 # Navigate to the SDK directory
 cd sdk/python
@@ -92,6 +103,7 @@ python -m twine upload dist/*
 ## 📢 Announce the Release
 
 Use the prepared announcement file [ANNOUNCEMENT.md](ANNOUNCEMENT.md) to announce the release on:
+
 - Social media
 - Developer forums
 - GitHub Discussions
