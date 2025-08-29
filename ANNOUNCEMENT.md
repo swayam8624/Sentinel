@@ -11,30 +11,35 @@ CipherMesh provides PII/tokenization and cryptographic protection layers.
 ## 🔥 Key Features
 
 ### 🔐 Data Protection
+
 - Real-time data redaction/tokenization
 - Format-preserving encryption (FF3-1)
 - Reversible detokenization with policy gating
 - Multi-language PII detection
 
 ### 🛡️ Self-Healing Security
+
 - Semantic violation detection
 - Constitutional AI reflection
 - Prompt rewriting and ranking
 - Tool/function call guarding
 
 ### 🔄 Provider Agnostic
+
 - Adapters for OpenAI, Anthropic, Mistral, Hugging Face, Ollama
 - Reverse proxy mode with provider-compatible endpoints
 - SDK middleware for Python and Node.js
 - Streaming support with mid-stream inspection
 
 ### ⚙️ Policy Engine
+
 - OPA-style policy evaluation
 - Policy versioning and canary deployments
 - Multi-tenant policy management
 - Audit trails and compliance reporting
 
 ### 🔐 Cryptographic Security
+
 - BYOK/HSM integration
 - Envelope encryption with AES-256-GCM
 - HKDF-SHA-512 key derivation
@@ -43,23 +48,28 @@ CipherMesh provides PII/tokenization and cryptographic protection layers.
 ## 🚀 Getting Started
 
 ### Docker
+
 ```bash
 docker run -p 8080:8080 sentinel/gateway:0.1.0
 ```
 
 ### Helm (Kubernetes)
+
 ```bash
 helm repo add sentinel https://swayam8624.github.io/Sentinel/charts
 helm install sentinel sentinel/sentinel
 ```
 
 ### SDKs
+
 **Node.js:**
+
 ```bash
 npm install @sentinel-platform/sentinel-sdk
 ```
 
 **Python:**
+
 ```bash
 pip install sentinel-sdk
 ```
