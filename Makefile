@@ -127,6 +127,15 @@ dev-tools:
 	$(GOGET) -u github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 	$(GOGET) -u github.com/swaggo/swag/cmd/swag@latest
 
+# Create a new release
+.PHONY: release
+release:
+	@if [ -z "$(VERSION)" ]; then \
+		echo "VERSION is not set. Usage: make release VERSION=1.0.0"; \
+		exit 1; \
+	fi
+	./scripts/release.sh $(VERSION)
+
 # Help
 .PHONY: help
 help:
@@ -151,3 +160,4 @@ help:
 	@echo "lint           - Lint the code"
 	@echo "docs           - Generate documentation"
 	@echo "dev-tools      - Install development tools"
+	@echo "release        - Create a new release (requires version)"
