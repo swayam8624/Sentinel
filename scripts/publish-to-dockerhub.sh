@@ -12,7 +12,7 @@ if [ $# -ne 1 ]; then
 fi
 
 DOCKERHUB_USERNAME=$1
-IMAGE_NAME="sentinel/gateway"
+IMAGE_NAME="sentinel-gateway"
 VERSION="0.1.0"
 
 echo "Publishing Docker images to Docker Hub..."
@@ -22,8 +22,8 @@ echo "Version: $VERSION"
 
 # Tag images for Docker Hub
 echo "Tagging images for Docker Hub..."
-docker tag $IMAGE_NAME:$VERSION $DOCKERHUB_USERNAME/$IMAGE_NAME:$VERSION
-docker tag $IMAGE_NAME:latest $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
+docker tag sentinel/gateway:$VERSION $DOCKERHUB_USERNAME/$IMAGE_NAME:$VERSION
+docker tag sentinel/gateway:latest $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
 
 # Push images to Docker Hub
 echo "Pushing images to Docker Hub..."
