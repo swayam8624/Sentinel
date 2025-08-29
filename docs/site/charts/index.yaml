@@ -3,7 +3,7 @@ entries:
   sentinel:
     - apiVersion: v2
       appVersion: 0.1.0
-      created: "2025-08-29T22:23:00Z"
+      created: "2025-08-29T23:03:00Z"
       description: A self-healing LLM firewall with cryptographic data protection
       digest: 1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
       name: sentinel
@@ -11,4 +11,4 @@ entries:
       urls:
         - https://swayam8624.github.io/Sentinel/charts/sentinel-0.1.0.tgz
       version: 0.1.0
-generated: "2025-08-29T22:23:00Z"
+generated: "2025-08-29T23:03:00Z"
