@@ -61,7 +61,7 @@ ciphermesh:
 
 # Sentinel configuration
 sentinel:
-  mode: audit # audit | enforce | silent
+  mode: enforce # audit | enforce | silent
 
   thresholds:
     # Similarity threshold for violation detection
@@ -94,7 +94,7 @@ observability:
 
   # Tracing configuration
   tracing:
-    enabled: false
+    enabled: true
     # OpenTelemetry collector endpoint
     collectorEndpoint: http://otel-collector:4317
 
