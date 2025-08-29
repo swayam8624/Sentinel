@@ -15,9 +15,10 @@ if [ ! -f setup.py ]; then
     exit 1
 fi
 
-# Check if we're logged in to PyPI
-if ! python -m twine check dist/* > /dev/null 2>&1; then
-    echo "Warning: twine check failed. Make sure you have twine installed and configured."
+# Check if twine is installed
+if ! python -m twine --version > /dev/null 2>&1; then
+    echo "Installing twine..."
+    pip install twine
 fi
 
 # Build the package
