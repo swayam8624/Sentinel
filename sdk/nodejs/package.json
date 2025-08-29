@@ -27,6 +27,11 @@
     "url": "https://github.com/swayam8624/Sentinel/issues"
   },
   "homepage": "https://github.com/swayam8624/Sentinel#readme",
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
   "devDependencies": {
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.0",
