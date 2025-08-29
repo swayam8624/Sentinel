@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # Sentinel Gateway
+  sentinel:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=postgresql://sentinel:${DB_PASSWORD:-sentinel123}@postgres:5432/sentinel
+      - REDIS_URL=redis://redis:6379
+      - LOG_LEVEL=info
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+
+  # PostgreSQL for metadata storage
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=sentinel
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-sentinel123}
+      - POSTGRES_DB=sentinel
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  # Redis for caching
+  redis:
+    image: redis:6-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  # Admin Console (to be implemented)
+  admin:
+    image: sentinel/admin:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - SENTINEL_API_URL=http://sentinel:8080
+    depends_on:
+      - sentinel
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

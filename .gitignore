@@ -1,0 +1,49 @@
+# Binaries
+sentinel
+*.exe
+*.dll
+*.so
+*.dylib
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build
+dist/
+build/
+*.tar.gz
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Docker
+.dockerignore
+
+# Go
+bin/
+pkg/
+.coverage.out
+
+# Helm
+charts/**/charts/
+charts/**/tmp/
+charts/**/ Chart.lock
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS generated files
+Thumbs.db

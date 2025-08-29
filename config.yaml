@@ -1,0 +1,113 @@
+# Sentinel Configuration
+
+# Server configuration
+server:
+  port: 8080
+  logLevel: info
+  # TLS configuration (optional)
+  # tls:
+  #   certFile: /path/to/cert.pem
+  #   keyFile: /path/to/key.pem
+
+# Database configuration
+database:
+  url: postgresql://sentinel:sentinel123@localhost:5432/sentinel
+  maxConnections: 20
+  connectionTimeout: 30s
+
+# Redis configuration
+redis:
+  url: redis://localhost:6379
+  maxRetries: 3
+  minIdleConns: 5
+
+# KMS configuration
+kms:
+  # Provider can be: aws, azure, gcp, or local (for development only)
+  provider: local
+  # For AWS KMS
+  # keyArn: arn:aws:kms:region:account:key/id
+  # For Azure Key Vault
+  # keyUrl: https://vault-name.vault.azure.net/keys/key-name/key-version
+  # For GCP KMS
+  # keyName: projects/project-id/locations/location/keyRings/ring/cryptoKeys/key
+
+# CipherMesh configuration
+ciphermesh:
+  detectors:
+    # Supported languages for NER detection
+    languages: [en, es, fr, de, ja, hi]
+    # Enable OCR for image/PDF attachments
+    enableOcr: false
+    # Enable code secret detection
+    codeSecrets: true
+    # Regex patterns for custom detection
+    customPatterns: []
+
+  actions:
+    # Default actions for different data classes
+    pii: fpe
+    phi: tokenize
+    pci: fpe
+    credentials: tokenize
+    generic: mask
+
+  # Detokenization settings
+  detokenize:
+    # Roles allowed to detokenize
+    rolesAllowed: [admin, security]
+    # Default TTL for token mappings (in hours)
+    defaultTtlHours: 168 # 1 week
+
+# Sentinel configuration
+sentinel:
+  mode: audit # audit | enforce | silent
+
+  thresholds:
+    # Similarity threshold for violation detection
+    violationSimilarity: 0.78
+    # Confidence threshold for reflection
+    reflectConfidence: 0.65
+
+  rewriter:
+    # Enable prompt rewriting
+    enabled: true
+    # Require user confirmation for rewritten prompts
+    confirmUser: true
+
+  encryption:
+    # Enable encryption of unsafe outputs
+    enabled: true
+    # Environment variable containing base secret
+    baseSecretEnv: SENTINEL_SECRET
+
+  tools:
+    # Lock down tools on violation detection
+    lockdownOnViolation: true
+
+# Observability configuration
+observability:
+  # Metrics endpoint
+  metrics:
+    enabled: true
+    path: /metrics
+
+  # Tracing configuration
+  tracing:
+    enabled: false
+    # OpenTelemetry collector endpoint
+    collectorEndpoint: http://otel-collector:4317
+
+  # Logging configuration
+  logging:
+    # Log format: json or text
+    format: json
+    # Enable PII scrubbing in logs
+    scrubPii: true
+
+# Rate limiting
+rateLimiting:
+  # Requests per minute per tenant
+  requestsPerMinute: 100
+  # Burst limit
+  burstLimit: 200
