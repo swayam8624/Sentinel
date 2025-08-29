@@ -24,23 +24,23 @@ docker build -t sentinel/gateway:$VERSION -t sentinel/gateway:latest .
 
 # 3. Package Helm chart
 echo "3. Packaging Helm chart..."
-helm package charts/sentinel
+./scripts/publish-helm.sh
 
 # 4. Create GitHub release
 echo "4. Creating GitHub release..."
 # Note: This requires GITHUB_TOKEN environment variable
-# ./scripts/create-release.sh "v$VERSION" "Release $VERSION"
+./scripts/create-release.sh "v$VERSION" "Release $VERSION"
 
 # 5. Publish Docker image (requires DOCKER_USERNAME and DOCKER_PASSWORD)
 echo "5. Publishing Docker image..."
-# ./scripts/publish-docker.sh "$VERSION"
+./scripts/publish-docker.sh "$VERSION"
 
 # 6. Publish Helm chart
-echo "6. Packaging Helm chart for publication..."
-# ./scripts/publish-helm.sh
+echo "6. Publishing Helm chart..."
+# This would typically involve pushing to a gh-pages branch
+# For now, we've prepared the files in the docs/charts directory
 
 echo "Release process completed!"
 echo "Manual steps required:"
-echo "1. Set GITHUB_TOKEN environment variable and run scripts/create-release.sh"
-echo "2. Set DOCKER_USERNAME and DOCKER_PASSWORD environment variables and run scripts/publish-docker.sh"
-echo "3. Push Helm chart package and index to GitHub Pages"
+echo "1. Push the docs/charts directory to GitHub Pages"
+echo "2. Verify the release on GitHub"
