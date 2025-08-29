@@ -15,7 +15,7 @@ RUN go mod download
 COPY . .
 
 # Build the binary
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o sentinel .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o sentinel-gateway .
 
 # Final stage
 FROM alpine:latest
@@ -25,7 +25,7 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 
 # Copy the binary from builder stage
-COPY --from=builder /app/sentinel .
+COPY --from=builder /app/sentinel-gateway .
 
 # Copy configuration files
 COPY --from=builder /app/config.yaml ./config.yaml
@@ -34,4 +34,4 @@ COPY --from=builder /app/config.yaml ./config.yaml
 EXPOSE 8080
 
 # Run the binary
-CMD ["./sentinel"]
+CMD ["./sentinel-gateway"]
