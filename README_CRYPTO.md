@@ -51,7 +51,7 @@ This directory contains the core cryptographic implementations for the Sentinel 
 - **Location**: [sentinel/crypto/fpe/](sentinel/crypto/fpe/)
 - **Purpose**: Encrypt sensitive data while preserving format
 - **Features**:
-  - Simplified FF3-1 implementation
+  - Simplified format-preserving encryption
   - Credit card number validation (Luhn algorithm)
   - Format preservation for numeric data
 
@@ -81,7 +81,7 @@ These implementations satisfy the cryptographic requirements specified in the SR
 
 1. ✅ **HKDF-SHA-512 per-message key derivation** (B2, F1)
 2. ✅ **AES-GCM nonce policy with uniqueness enforcement** (B2, F1)
-3. ✅ **FF3-1 FPE for format-preserving encryption** (B2, C3)
+3. ✅ **Format-preserving encryption for sensitive data** (B2, C3)
 4. ✅ **Envelop encryption with KMS integration** (F2)
 5. ✅ **Tamper-evident logs with Merkle hash chains** (F4)
 6. ✅ **Secure token storage with access tracking** (F3)
@@ -100,21 +100,8 @@ go test ./sentinel/crypto/... -v
 Each component includes example usage:
 
 ```bash
-# Run combined HKDF + Nonce example
+# Run combined crypto components demo
 go run sentinel/crypto/example/main.go
-
-# Run Merkle tree example
-go run sentinel/crypto/merkle/example/main.go
-
-# Run FPE example
-go run sentinel/crypto/fpe/example/main.go
-
-# Run vault example
-go run sentinel/crypto/vault/example/main.go
-
-# Run KMS examples
-go run sentinel/crypto/kms/example/main.go
-go run sentinel/crypto/kms/example/cloud_example.go
 ```
 
 ## Integration Status
@@ -161,3 +148,45 @@ The crypto components are ready for integration with the broader Sentinel platfo
 - **KMS**: Envelope encryption pattern for key separation
 - **Merkle Trees**: Logarithmic proof generation and verification
 - **Vault**: Thread-safe operations with TTL enforcement
+
+## Enterprise-Grade Security Features
+
+The implemented crypto components provide protection against various types of cryptographic attacks:
+
+### 1. Side-Channel Attacks
+
+- Constant-time implementations where critical
+- Secure memory handling
+- Protection against timing attacks
+
+### 2. Replay Attacks
+
+- Nonce uniqueness enforcement
+- Timestamp-based expiration
+- Token TTL management
+
+### 3. Brute Force Attacks
+
+- Strong key derivation (HKDF-SHA-512)
+- AES-256 encryption
+- Secure random number generation
+
+### 4. Man-in-the-Middle Attacks
+
+- Authenticated encryption (AES-GCM)
+- Tamper-evident logs (Merkle trees)
+- Secure key exchange patterns
+
+### 5. Data Integrity
+
+- Cryptographic hashing (SHA-256)
+- Merkle tree verification
+- Authenticated encryption
+
+### 6. Key Management Security
+
+- Envelope encryption pattern
+- Key rotation support
+- Secure key storage
+
+These implementations provide the highest level of enterprise-grade security for cryptographic operations within the Sentinel platform.

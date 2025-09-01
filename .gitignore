@@ -1,5 +1,4 @@
 # Binaries
-sentinel
 *.exe
 *.dll
 *.so

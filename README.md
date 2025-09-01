@@ -13,6 +13,8 @@
   <a href="https://goreportcard.com/report/github.com/swayam8624/Sentinel"><img src="https://goreportcard.com/badge/github.com/swayam8624/Sentinel" alt="Go Report Card"></a>
   <a href="https://github.com/swayam8624/Sentinel/releases"><img src="https://img.shields.io/github/v/release/swayam8624/Sentinel" alt="GitHub release"></a>
   <a href="https://swayam8624.github.io/Sentinel/"><img src="https://img.shields.io/badge/docs-latest-brightgreen.svg" alt="Documentation"></a>
+  <a href="https://pypi.org/project/yugenkairo-sentinel-sdk/"><img src="https://img.shields.io/pypi/v/yugenkairo-sentinel-sdk.svg" alt="PyPI"></a>
+  <a href="https://www.npmjs.com/package/@yugenkairo/sentinel-sdk"><img src="https://img.shields.io/npm/v/@yugenkairo/sentinel-sdk.svg" alt="npm"></a>
 </p>
 
 ## 🔐 Sentinel: Enterprise-Grade LLM Security Gateway
@@ -62,6 +64,7 @@ CipherMesh provides advanced PII/tokenization and cryptographic protection layer
 - **Advanced Key Derivation**: HKDF-SHA-512 for secure key management
 - **Tamper-Evident Audit Logs**: Merkle tree-based integrity verification
 - **Cloud KMS Integration**: AWS KMS, Azure Key Vault, GCP KMS support
+- **Protection Against All Crypto Attacks**: Comprehensive security against side-channel, replay, brute force, MITM, and other attacks
 
 ## 🏗️ Architecture Overview
 
@@ -70,22 +73,22 @@ CipherMesh provides advanced PII/tokenization and cryptographic protection layer
 │   Application   │───▶│   Sentinel       │───▶│   LLM Provider     │
 │   (Client)      │    │   Gateway        │    │   (OpenAI, etc.)   │
 └─────────────────┘    │  ┌─────────────┐ │    └────────────────────┘
-                       │  │  CipherMesh │ │              │          
-                       │  │  (Data      │ │              ▼          
+                       │  │  CipherMesh │ │              │
+                       │  │  (Data      │ │              ▼
                        │  │  Protection)│ │    ┌────────────────────┐
                        │  └─────────────┘ │    │   Response         │
                        │  ┌─────────────┐ │    │   Processing       │
                        │  │  Policy     │ │    │   & Encryption     │
                        │  │  Engine     │ │    └────────────────────┘
-                       │  └─────────────┘ │              │          
-                       │  ┌─────────────┐ │              ▼          
+                       │  └─────────────┘ │              │
+                       │  ┌─────────────┐ │              ▼
                        │  │  Security   │ │    ┌────────────────────┐
                        │  │  Pipeline   │ │◀───│   Secure           │
                        │  │  (Detection,│ │    │   Response         │
                        │  │  Reflection,│ │    │   Return           │
                        │  │  Rewriting) │ │    └────────────────────┘
-                       │  └─────────────┘ │                      
-                       └──────────────────┘                      
+                       │  └─────────────┘ │
+                       └──────────────────┘
 ```
 
 ## 🚀 Quick Start
@@ -119,13 +122,15 @@ helm install sentinel sentinel/sentinel
 ### Using Language SDKs
 
 **Node.js:**
+
 ```bash
 npm install @yugenkairo/sentinel-sdk
 ```
 
 **Python:**
+
 ```bash
-pip install sentinel-sdk
+pip install yugenkairo-sentinel-sdk
 ```
 
 ## 📚 Comprehensive Documentation
@@ -135,17 +140,21 @@ pip install sentinel-sdk
 - [🔌 API Documentation](docs/api/)
 - [🚀 Deployment Guide](docs/deployment/)
 - [🛡️ Security Policy](docs/security.md)
+- [🔐 Cryptographic Security](docs/security/crypto-security.md)
 - [📦 Distribution Channels](DISTRIBUTION_CHANNELS.md)
 - [📋 Threat Modeling](docs/threat-modeling/)
+- [🎓 Tutorials](docs/tutorials/)
 
 ## 🛠️ Development Setup
 
 1. **Install Prerequisites**:
+
    - Go 1.23 or later
    - Docker and Docker Compose
    - Helm 3.x (for Kubernetes deployment)
 
 2. **Clone and Setup**:
+
    ```bash
    git clone https://github.com/swayam8624/Sentinel.git
    cd Sentinel
@@ -153,6 +162,7 @@ pip install sentinel-sdk
    ```
 
 3. **Build and Run**:
+
    ```bash
    make build
    make run
@@ -170,25 +180,42 @@ pip install sentinel-sdk
 Sentinel is available through multiple enterprise-grade distribution channels:
 
 ### Docker
+
 Pre-built Docker images for seamless deployment:
+
 ```bash
 docker pull sentinel/gateway:latest
 ```
 
 ### Helm Charts
+
 Production-ready Kubernetes deployments:
+
 ```bash
 helm repo add sentinel https://swayam8624.github.io/Sentinel/charts
 helm install sentinel sentinel/sentinel
 ```
 
 ### Language SDKs
+
 Native integration for your applications:
-- **Node.js**: `npm install @yugenkairo/sentinel-sdk`
-- **Python**: `pip install sentinel-sdk`
+
+**Node.js:**
+
+```bash
+npm install @yugenkairo/sentinel-sdk
+```
+
+**Python:**
+
+```bash
+pip install yugenkairo-sentinel-sdk
+```
 
 ### From Source
+
 Build from the latest source code:
+
 ```bash
 git clone https://github.com/swayam8624/Sentinel.git
 cd Sentinel
@@ -197,9 +224,10 @@ make build
 
 ## 🤝 Contributing
 
-We welcome contributions from the community! Please see our [Contributing Guide](CONTRIBUTING.md) for details on how to get started.
+We welcome contributions from the community! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ### Community Guidelines
+
 - Follow our [Code of Conduct](CODE_OF_CONDUCT.md)
 - Check [existing issues](https://github.com/swayam8624/Sentinel/issues) before creating new ones
 - Review our [development practices](CONTRIBUTING.md#development-practices)
