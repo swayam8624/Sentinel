@@ -102,6 +102,14 @@ Each component includes example usage:
 ```bash
 # Run combined crypto components demo
 go run sentinel/crypto/example/main.go
+
+# Run individual component examples
+go run sentinel/crypto/hkdf/example/main.go
+go run sentinel/crypto/nonce/example/main.go
+go run sentinel/crypto/kms/examples/basic/main.go
+go run sentinel/crypto/fpe/example/main.go
+go run sentinel/crypto/merkle/example/main.go
+go run sentinel/crypto/vault/example/main.go
 ```
 
 ## Integration Status

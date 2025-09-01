@@ -1,67 +1,55 @@
 package main
 
 import (
+	"crypto/rand"
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/sentinel-platform/sentinel/sentinel/crypto/vault"
 )
 
 func main() {
-	// Example of vault usage
-	fmt.Println("=== Vault Example ===")
+	// Generate encryption key
+	encryptionKey := make([]byte, 32)
+	rand.Read(encryptionKey)
 
-	// Create a master key and vault
-	masterKey := []byte("masterkey12345678901234567890123") // 32 bytes
-	vault := vault.NewVault(masterKey)
+	// Create vault
+	v := vault.NewVault(encryptionKey)
 
-	// Store some sensitive data
-	tokenID := "cc-token-12345"
-	creditCard := "4532015112830366"
-	ttl := 24 * time.Hour
-	accessReason := "initial storage"
+	// Start cleanup goroutine
+	v.StartCleanup(5 * time.Second)
 
-	err := vault.Store(tokenID, []byte(creditCard), ttl, accessReason)
+	// Store some data
+	key := "my-secret-token"
+	data := []byte("This is a secret token value")
+	ttl := 1 * time.Hour
+
+	err := v.Store(key, data, ttl)
 	if err != nil {
-		log.Fatalf("Failed to store credit card: %v", err)
+		fmt.Printf("Error storing data: %v\n", err)
+		return
 	}
 
-	fmt.Printf("Stored credit card %s with token ID %s\n", creditCard, tokenID)
+	fmt.Printf("Stored data with key: %s\n", key)
 
-	// Retrieve the data
-	retrievedData, err := vault.Retrieve(tokenID, "retrieval for transaction")
+	// Retrieve data
+	retrievedData, err := v.Retrieve(key, "demo-access")
 	if err != nil {
-		log.Fatalf("Failed to retrieve credit card: %v", err)
+		fmt.Printf("Error retrieving data: %v\n", err)
+		return
 	}
 
-	fmt.Printf("Retrieved credit card: %s\n", string(retrievedData))
+	fmt.Printf("Retrieved data: %s\n", string(retrievedData))
 
-	// Get entry information
-	info, err := vault.GetEntryInfo(tokenID)
+	// Check access log
+	accessLog, err := v.GetAccessLog(key)
 	if err != nil {
-		log.Fatalf("Failed to get entry info: %v", err)
+		fmt.Printf("Error getting access log: %v\n", err)
+		return
 	}
 
-	fmt.Printf("Entry created at: %s\n", info.CreatedAt.Format(time.RFC3339))
-	fmt.Printf("Entry expires at: %s\n", info.ExpiresAt.Format(time.RFC3339))
-	fmt.Printf("Last access reason: %s\n", info.AccessReason)
-
-	// List all tokens
-	tokens := vault.ListTokens()
-	fmt.Printf("Total tokens in vault: %d\n", len(tokens))
-
-	for _, token := range tokens {
-		fmt.Printf("  - %s\n", token)
-	}
-
-	// Delete the token
-	vault.Delete(tokenID)
-	fmt.Printf("Deleted token %s\n", tokenID)
-
-	// Try to retrieve deleted token (should fail)
-	_, err = vault.Retrieve(tokenID, "post-deletion access")
-	if err != nil {
-		fmt.Printf("Expected error when retrieving deleted token: %v\n", err)
+	fmt.Printf("Access log entries: %d\n", len(accessLog))
+	if len(accessLog) > 0 {
+		fmt.Printf("Last access reason: %s\n", accessLog[len(accessLog)-1].Reason)
 	}
 }

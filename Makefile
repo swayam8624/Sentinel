@@ -54,6 +54,11 @@ test-security:
 test-performance:
 	$(GOTEST) -v ./tests/performance/...
 
+# Run comprehensive tests
+.PHONY: test-comprehensive
+test-comprehensive:
+	$(GOTEST) -v ./tests/comprehensive/...
+
 # Run benchmarks
 .PHONY: bench
 bench:
@@ -160,6 +165,10 @@ publish-nodejs:
 publish-python:
 	./scripts/publish-python-sdk.sh
 
+# Run all tests
+.PHONY: test-all
+test-all: test-unit test-integration test-security test-performance test-comprehensive
+
 # Help
 .PHONY: help
 help:
@@ -172,6 +181,8 @@ help:
 	@echo "test-integration - Run integration tests"
 	@echo "test-security  - Run security tests"
 	@echo "test-performance - Run performance tests"
+	@echo "test-comprehensive - Run comprehensive tests"
+	@echo "test-all       - Run all test suites"
 	@echo "bench          - Run benchmarks"
 	@echo "test-coverage  - Run tests with coverage report"
 	@echo "clean          - Clean build artifacts"

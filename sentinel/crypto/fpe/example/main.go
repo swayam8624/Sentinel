@@ -1,58 +1,61 @@
 package main
 
 import (
+	"crypto/rand"
 	"fmt"
-	"log"
 
 	"github.com/sentinel-platform/sentinel/sentinel/crypto/fpe"
 )
 
 func main() {
-	// Example of FPE usage for credit card numbers
-	fmt.Println("=== FPE Example ===")
+	// Generate a key
+	key := make([]byte, 16)
+	rand.Read(key)
+	tweak := []byte("my-tweak")
 
-	// Create a key and tweak
-	key := []byte("examplekey123456") // 16 bytes for AES-128
-	tweak := []byte("tweak12")        // 7 bytes as required by FF3-1
+	fpeInstance := fpe.New(key, tweak)
 
-	// Create FF3-1 instance
-	ff31, err := fpe.NewFF31(key, tweak)
+	// Encrypt a credit card number
+	ccNumber := "4532015112830366"
+	encryptedCC, err := fpeInstance.Encrypt(ccNumber)
 	if err != nil {
-		log.Fatalf("Failed to create FF3-1 instance: %v", err)
+		fmt.Printf("Error encrypting CC: %v\n", err)
+		return
 	}
 
-	// Example credit card number
-	creditCard := "4532015112830366"
+	fmt.Printf("Original CC: %s\n", ccNumber)
+	fmt.Printf("Encrypted CC: %s\n", encryptedCC)
 
-	fmt.Printf("Original credit card: %s\n", creditCard)
-
-	// Encrypt the credit card number
-	encrypted, err := ff31.Encrypt(creditCard, 10) // Radix 10 for decimal digits
+	// Decrypt the credit card number
+	decryptedCC, err := fpeInstance.Decrypt(encryptedCC)
 	if err != nil {
-		log.Fatalf("Failed to encrypt credit card: %v", err)
+		fmt.Printf("Error decrypting CC: %v\n", err)
+		return
 	}
 
-	fmt.Printf("Encrypted credit card: %s\n", encrypted)
+	fmt.Printf("Decrypted CC: %s\n", decryptedCC)
 
-	// Validate using Luhn algorithm
-	isValid := fpe.ValidateCreditCardLuhn(creditCard)
-	fmt.Printf("Original credit card is valid: %t\n", isValid)
+	// Validate with Luhn check
+	isValid := luhnCheck("4532015112830366")
+	fmt.Printf("CC is valid (Luhn): %t\n", isValid)
+}
 
-	// Note: In a real implementation, the decrypted value would match the original
-	// For this simplified example, we're just demonstrating the API
+// luhnCheck validates a number using the Luhn algorithm
+func luhnCheck(number string) bool {
+	sum := 0
+	alt := false
 
-	// Example of validating other types of numbers
-	fmt.Println("\n=== Luhn Validation Examples ===")
-
-	examples := []string{
-		"4532015112830366", // Valid Visa
-		"5555555555554444", // Valid Mastercard
-		"1234567890123456", // Invalid
-		"4000056655665556", // Valid Visa debit
+	for i := len(number) - 1; i >= 0; i-- {
+		digit := int(number[i] - '0')
+		if alt {
+			digit *= 2
+			if digit > 9 {
+				digit = (digit % 10) + 1
+			}
+		}
+		sum += digit
+		alt = !alt
 	}
 
-	for _, example := range examples {
-		isValid := fpe.ValidateCreditCardLuhn(example)
-		fmt.Printf("Card %s is valid: %t\n", example, isValid)
-	}
+	return sum%10 == 0
 }

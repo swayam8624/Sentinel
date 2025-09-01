@@ -1,0 +1,12 @@
+apiVersion: v2
+name: sentinel
+description: A self-healing LLM firewall with cryptographic data protection
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+home: https://github.com/swayam8624/Sentinel
+sources:
+  - https://github.com/swayam8624/Sentinel
+maintainers:
+  - name: Sentinel Team
+    email: swayam8624@example.com

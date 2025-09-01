@@ -99,10 +99,9 @@ func (mt *MerkleTree) GenerateProof(index int) ([][]byte, error) {
 		return nil, fmt.Errorf("index out of range")
 	}
 
-	var proof [][]byte
-
-	// Simple implementation: just return the hashes of all other leaves
+	// For simplicity, we'll return the hashes of all other leaves
 	// This is not the most efficient but it works for demonstration
+	var proof [][]byte
 	for i, leaf := range mt.Leaves {
 		if i != index {
 			proof = append(proof, leaf.Hash)
@@ -117,15 +116,47 @@ func (mt *MerkleTree) VerifyProof(leafData []byte, proof [][]byte, rootHash []by
 	// Calculate leaf hash
 	leafHash := sha256.Sum256(leafData)
 
-	// For our simplified implementation, we just check if the leaf hash is in the proof
-	// and if combining all hashes (including leaf) produces the root hash
-	allHashes := append([][]byte{leafHash[:]}, proof...)
+	// For our simplified implementation, we need to recreate how the root hash was calculated
+	// First, collect all leaf hashes including the one we're verifying
+	var allLeafHashes [][]byte
 
-	// Sort of simulate the Merkle tree verification
-	// In a real implementation, this would be more complex
-	calculatedRoot := calculateSimpleRoot(allHashes)
+	// Add the leaf hash we're verifying
+	allLeafHashes = append(allLeafHashes, leafHash[:])
 
-	// Compare with root hash
+	// Add all proof hashes
+	allLeafHashes = append(allLeafHashes, proof...)
+
+	// Sort the hashes to ensure consistent ordering
+	// This is a simplified approach - in a real implementation we'd maintain the tree structure
+	// For now, we'll just sort by comparing byte by byte
+	for i := 0; i < len(allLeafHashes)-1; i++ {
+		for j := i + 1; j < len(allLeafHashes); j++ {
+			if compareHashes(allLeafHashes[i], allLeafHashes[j]) > 0 {
+				allLeafHashes[i], allLeafHashes[j] = allLeafHashes[j], allLeafHashes[i]
+			}
+		}
+	}
+
+	// Now calculate what the root hash would be with these leaves
+	dummyLeaves := make([]*MerkleNode, len(allLeafHashes))
+	for i, hash := range allLeafHashes {
+		dummyLeaves[i] = &MerkleNode{Hash: hash}
+	}
+
+	// Build a dummy tree to get the root hash
+	dummyRoot := buildTree(dummyLeaves)
+
+	if dummyRoot == nil {
+		return false
+	}
+
+	calculatedRoot := dummyRoot.Hash
+
+	// Compare with provided root hash
+	if len(calculatedRoot) != len(rootHash) {
+		return false
+	}
+
 	for i, b := range calculatedRoot {
 		if b != rootHash[i] {
 			return false
@@ -133,6 +164,25 @@ func (mt *MerkleTree) VerifyProof(leafData []byte, proof [][]byte, rootHash []by
 	}
 
 	return true
+}
+
+// compareHashes compares two hashes byte by byte
+func compareHashes(a, b []byte) int {
+	for i := 0; i < len(a) && i < len(b); i++ {
+		if a[i] < b[i] {
+			return -1
+		} else if a[i] > b[i] {
+			return 1
+		}
+	}
+
+	if len(a) < len(b) {
+		return -1
+	} else if len(a) > len(b) {
+		return 1
+	}
+
+	return 0
 }
 
 // calculateSimpleRoot calculates a simple root hash from a list of hashes

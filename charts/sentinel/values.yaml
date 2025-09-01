@@ -1,0 +1,177 @@
+# Default values for Sentinel Helm chart
+
+# Tenant configuration
+tenant:
+  id: "default"
+  name: "Default Tenant"
+
+# Image configuration
+image:
+  repository: swayamsingal/sentinel-gateway
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 8080
+
+# Ingress configuration
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: sentinel.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+# Database configuration
+database:
+  host: postgresql
+  port: 5432
+  username: sentinel
+  password: sentinel
+  database: sentinel
+
+# Redis configuration
+redis:
+  host: redis
+  port: 6379
+
+# KMS configuration
+kms:
+  provider: local
+  keyPath: /etc/sentinel/keys
+
+# Resource limits
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# Node selector
+nodeSelector: {}
+
+# Tolerations
+tolerations: []
+
+# Affinity
+affinity: {}
+
+# Application configuration
+config:
+  # Server configuration
+  server:
+    port: 8080
+    logLevel: info
+
+  # Database configuration
+  database:
+    host: postgresql
+    port: 5432
+    username: sentinel
+    password: sentinel123
+    database: sentinel
+    maxConnections: 20
+    connectionTimeout: 30s
+
+  # Redis configuration
+  redis:
+    host: redis
+    port: 6379
+    maxRetries: 3
+    minIdleConns: 5
+
+  # KMS configuration
+  kms:
+    # Provider can be: aws, azure, gcp, or local (for development only)
+    provider: local
+    # keyArn: ""
+    # keyUrl: ""
+    # keyName: ""
+
+  # CipherMesh configuration
+  ciphermesh:
+    detectors:
+      languages: [en, es, fr, de, ja, hi]
+      enableOcr: false
+      codeSecrets: true
+      customPatterns: []
+
+    actions:
+      pii: fpe
+      phi: tokenize
+      pci: fpe
+      credentials: tokenize
+      generic: mask
+
+    detokenize:
+      rolesAllowed: [admin, security]
+      defaultTtlHours: 168 # 1 week
+
+  # Sentinel configuration
+  sentinel:
+    mode: audit # audit | enforce | silent
+
+    thresholds:
+      violationSimilarity: 0.78
+      reflectConfidence: 0.65
+
+    rewriter:
+      enabled: true
+      confirmUser: true
+
+    encryption:
+      enabled: true
+      baseSecretEnv: SENTINEL_SECRET
+
+    tools:
+      lockdownOnViolation: true
+
+  # Observability configuration
+  observability:
+    metrics:
+      enabled: true
+      path: /metrics
+
+    tracing:
+      enabled: false
+      collectorEndpoint: http://otel-collector:4317
+
+    logging:
+      format: json
+      scrubPii: true
+
+  # Rate limiting
+  rateLimiting:
+    requestsPerMinute: 100
+    burstLimit: 200
+
+# PostgreSQL dependency configuration
+postgresql:
+  enabled: true
+  auth:
+    username: sentinel
+    password: sentinel123
+    database: sentinel
+  primary:
+    service:
+      ports:
+        postgres: 5432
+
+# Redis dependency configuration
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    service:
+      ports:
+        redis: 6379
