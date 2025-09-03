@@ -91,3 +91,5 @@ Thumbs.db
 
 # Credentials and sensitive files
 credentials/
+
+*.tex
