@@ -55,9 +55,39 @@ charts/**/charts/
 charts/**/tmp/
 charts/**/ Chart.lock
 
+# Models and large files
+models/
+*.safetensors
+*.bin
+*.onnx
+*.h5
+*.pkl
+*.pt
+*.pth
+
+# Test results and reports
+*_test_results.json
+comprehensive_sdk_report.json
+FINAL_SDK_PERFORMANCE_REPORT.json
+
 # Temporary files
 *.tmp
 *.temp
+*.bak
+*.backup
 
 # OS generated files
 Thumbs.db
+.DS_Store
+
+# GPG and security
+*.gpg
+*.asc
+.gnupg/
+
+# Runtime files
+*.pid
+*.sock
+
+# Credentials and sensitive files
+credentials/
