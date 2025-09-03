@@ -1,0 +1,28 @@
+[package]
+name = "sentinel-sdk"
+version = "1.0.0"
+edition = "2021"
+description = "Rust SDK for Sentinel LLM Security Gateway - Real-time threat detection and prompt injection protection"
+authors = ["Sentinel Security Team <yugenkairo@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/swayam8624/Sentinel"
+homepage = "https://github.com/swayam8624/Sentinel"
+documentation = "https://docs.rs/sentinel-sdk"
+readme = "README.md"
+keywords = ["llm", "security", "ai", "threat-detection", "prompt-injection"]
+categories = ["api-bindings", "security", "web-programming"]
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
+reqwest = { version = "0.11", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "1.0", features = ["v4"] }
+chrono = { version = "0.4", features = ["serde"] }
+thiserror = "1.0"
+base64 = "0.21"
+sha2 = "0.10"
+hmac = "0.12"
+
+[dev-dependencies]
+tokio-test = "0.4"

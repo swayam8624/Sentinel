@@ -8,14 +8,29 @@
 .vscode/
 .idea/
 *.swp
+{{ ... }}
 *.swo
 *~
 .DS_Store
 
-# Build
+# Build artifacts
 dist/
 build/
 *.tar.gz
+target/
+*.class
+*.jar
+node_modules/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Rust
+Cargo.lock
+
+# Java
+.m2/
 
 # Logs
 *.log

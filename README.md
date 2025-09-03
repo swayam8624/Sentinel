@@ -212,6 +212,28 @@ npm install @yugenkairo/sentinel-sdk
 pip install yugenkairo-sentinel-sdk
 ```
 
+**Rust:**
+
+```bash
+cargo add sentinel-sdk
+```
+
+**Java:**
+
+```xml
+<dependency>
+    <groupId>com.sentinel</groupId>
+    <artifactId>sentinel-sdk</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+**Go:**
+
+```bash
+go get github.com/swayam8624/Sentinel/sdk/go
+```
+
 ### From Source
 
 Build from the latest source code:

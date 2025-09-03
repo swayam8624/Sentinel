@@ -65,13 +65,35 @@ helm install sentinel sentinel/sentinel
 **Node.js:**
 
 ```bash
-npm install @sentinel-platform/sentinel-sdk
+npm install @yugenkairo/sentinel-sdk
 ```
 
 **Python:**
 
 ```bash
 pip install sentinel-sdk
+```
+
+**Rust:**
+
+```bash
+cargo add sentinel-sdk
+```
+
+**Java:**
+
+```xml
+<dependency>
+    <groupId>com.sentinel</groupId>
+    <artifactId>sentinel-sdk</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+**Go:**
+
+```bash
+go get github.com/swayam8624/Sentinel/sdk/go
 ```
 
 ## 📚 Documentation
@@ -92,7 +114,10 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](https:
 **Documentation:** https://swayam8624.github.io/Sentinel/  
 **Docker Images:** sentinel/gateway on Docker Hub  
 **Helm Charts:** https://swayam8624.github.io/Sentinel/charts  
-**Node.js SDK:** @sentinel-platform/sentinel-sdk on npm  
-**Python SDK:** sentinel-sdk on PyPI
+**Node.js SDK:** @yugenkairo/sentinel-sdk on npm  
+**Python SDK:** sentinel-sdk on PyPI  
+**Rust SDK:** sentinel-sdk on crates.io  
+**Java SDK:** com.sentinel:sentinel-sdk on Maven Central  
+**Go SDK:** github.com/swayam8624/Sentinel/sdk/go
 
 Join us in building the future of secure LLM applications! 🚀
